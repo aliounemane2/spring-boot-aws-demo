@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+
+  spring-boot-geeks:
+    #build: .
+    image: sivaprasadreddy/spring-boot-geeks
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_DRIVER-CLASS-NAME=org.postgresql.Driver
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://geeks-db:5432/appdb
+      - SPRING_DATASOURCE_USERNAME=siva
+      - SPRING_DATASOURCE_PASSWORD=secret
+      - AWS_ENDPOINT_URI=http://localstack:4566
+      - APP_MOCK_ENV=true
+    ports:
+      - "18080:8080"
+      - "8787:8787"
+    restart: unless-stopped
+    depends_on:
+      - geeks-db
+      - localstack

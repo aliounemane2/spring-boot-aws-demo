@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+>
+<head>
+    <title>Geeks - Profiles</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="pt-5">
+        <div class="alert alert-primary" role="alert" th:each="profile: ${profiles}">
+            <h3 class="alert-heading">
+                <a href="#" th:href="${'/profiles/'+ profile.id}" th:text="${profile.name}">Profile Name</a>
+            </h3>
+        </div>
+    </div>
+</div>
+</body>
+</html>

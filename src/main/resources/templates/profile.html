@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Profile</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="pt-5 row ">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Profile Picture</h3>
+                </div>
+                <div class="card-body">
+                    <img src="/images/no-photo.png" th:src="${'/profiles/'+profile.id+'/photo'}"
+                         onerror="this.src = '/images/no-photo.png';this.onerror='';"
+                         class="img-thumbnail" alt="profile picture"
+                         height="400" width="300"
+                        >
+                </div>
+                <div class="p-2">
+                <form method="post" th:action="${'/profiles/'+profile.id+'/photo'}"
+                      enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="file" class="form-label">Select photo (PNG, JPG, JPEG)</label>
+                        <div class="col-sm-10">
+                            <input type="file" id="file" name="file" class="form-control" required/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-4">
+                            <input type="submit" class="btn btn-primary pull-right"
+                                   value="Upload"/>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+        <div th:if="${msg}">
+            <div class="alert alert-success"><span th:text="${msg}">Message</span></div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h3>Profile Details</h3>
+            </div>
+            <div class="card-body">
+                <form id="editForm" method="post" th:method="put"
+                      th:action="${'/profiles/'+profile.id}" th:object="${profile}">
+                    <input type="hidden" name="id" th:value="${profile.id}"/>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name*</label>
+                        <input type="text" id="name" name="name"
+                               class="form-control"
+                               required="required"
+                               th:field="*{name}"
+                               th:value="${profile.name}"
+                               th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"
+                               placeholder="Enter name"
+                               />
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name Error</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="text" id="email" name="email"
+                               th:field="*{email}"
+                               th:value="${profile.email}"
+                               th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
+                               class="form-control" placeholder="Enter email" />
+                        <div class="invalid-feedback"  th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email Error</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="blog" class="form-label">Blog</label>
+                        <input type="text" id="blog" name="blog"
+                               th:field="*{blog}"
+                               th:value="${profile.blog}"
+                               th:classappend="${#fields.hasErrors('blog')} ? 'is-invalid' : ''"
+                               class="form-control" placeholder="Enter blog" />
+                        <div class="invalid-feedback"  th:if="${#fields.hasErrors('blog')}" th:errors="*{blog}">blog Error</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="github" class="form-label">GitHub</label>
+                        <input type="text" id="github" name="github"
+                               th:field="*{github}"
+                               th:value="${profile.github}"
+                               th:classappend="${#fields.hasErrors('github')} ? 'is-invalid' : ''"
+                               class="form-control" placeholder="Enter github username" />
+                        <div class="invalid-feedback"  th:if="${#fields.hasErrors('github')}" th:errors="*{github}">github Error</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="twitter" class="form-label">Twitter</label>
+                        <input type="text" id="twitter" name="twitter"
+                               th:field="*{twitter}"
+                               th:value="${profile.twitter}"
+                               th:classappend="${#fields.hasErrors('twitter')} ? 'is-invalid' : ''"
+                               class="form-control" placeholder="Enter twitter handle" />
+                        <div class="invalid-feedback"  th:if="${#fields.hasErrors('twitter')}" th:errors="*{twitter}">twitter Error</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="youtube" class="form-label">YouTube</label>
+                        <input type="text" id="youtube" name="youtube"
+                               th:field="*{youtube}"
+                               th:value="${profile.youtube}"
+                               th:classappend="${#fields.hasErrors('youtube')} ? 'is-invalid' : ''"
+                               class="form-control" placeholder="Enter youtube channel name" />
+                        <div class="invalid-feedback"  th:if="${#fields.hasErrors('youtube')}" th:errors="*{youtube}">youtube Error</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary pull-right">Submit</button>
+
+                </form>
+            </div>
+        </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
