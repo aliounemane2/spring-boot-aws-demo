@@ -1,9 +1,11 @@
 name               = "spring-boot-geeks"
 environment        = "test"
 region             = "us-east-1"
+aws_profile        = "siva"
 availability_zones = ["us-east-1a", "us-east-1b"]
 public_subnets     = ["10.0.16.0/20", "10.0.48.0/20"]
 s3_bucket_name     = "geeks"
 //container_image    = "sivaprasadreddy/spring-boot-geeks"
-container_image    = "972824157910.dkr.ecr.us-east-1.amazonaws.com/spring-boot-geeks"
+container_image    = "972824157910.dkr.ecr.us-east-1.amazonaws.com/spring-boot-geeks-test:1.0.0"
+container_cpu      = 512
 container_memory   = 1024

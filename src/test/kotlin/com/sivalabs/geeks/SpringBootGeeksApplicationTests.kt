@@ -53,11 +53,6 @@ class SpringBootGeeksApplicationTests {
                 .withCredentials(credentialsProvider)
                 .build()
         }
-
-        @Bean
-        fun imageService(properties: ApplicationProperties, amazonS3: AmazonS3) : ImageService {
-            return S3ImageService(properties, amazonS3)
-        }
     }
 
     @Test

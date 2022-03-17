@@ -7,10 +7,8 @@ import com.amazonaws.client.builder.AwsClientBuilder
 import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.AmazonS3ClientBuilder
-import com.sivalabs.geeks.domain.ImageService
-import com.sivalabs.geeks.domain.S3ImageService
+import io.awspring.cloud.autoconfigure.context.properties.AwsRegionProperties
 import org.slf4j.LoggerFactory
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
@@ -18,7 +16,6 @@ import org.springframework.core.env.Environment
 
 @Configuration
 @Profile("!test")
-@ConditionalOnProperty(name = ["app.storage-backend"], havingValue = "s3")
 class AwsConfig(
     private val properties: ApplicationProperties,
     private val environment: Environment
@@ -26,12 +23,7 @@ class AwsConfig(
     private val logger = LoggerFactory.getLogger(javaClass)
 
     @Bean
-    fun imageService(properties: ApplicationProperties, amazonS3: AmazonS3) : ImageService {
-        return S3ImageService(properties, amazonS3)
-    }
-
-    @Bean
-    fun amazonS3(): AmazonS3 {
+    fun amazonS3(regionProperties: AwsRegionProperties): AmazonS3 {
         logger.debug("Creating localstack amazonS3 client")
         val builder = AmazonS3ClientBuilder.standard().enablePathStyleAccess()
         this.applyEndpointOverride(builder, "s3")

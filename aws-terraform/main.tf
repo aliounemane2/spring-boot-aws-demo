@@ -5,13 +5,12 @@ terraform {
       version = "~> 3.27"
     }
   }
-
   required_version = ">= 0.14.9"
 }
 
 provider "aws" {
-  profile = "siva"
-  region  = "us-east-1"
+  profile = var.aws_profile
+  region  = var.region
 }
 
 

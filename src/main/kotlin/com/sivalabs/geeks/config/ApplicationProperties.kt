@@ -6,6 +6,4 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 class ApplicationProperties {
     var mockEnv = false
     var bucketName: String = "geeks"
-    var storageBackend: String = "s3"
-    var storagePath: String = ""
 }

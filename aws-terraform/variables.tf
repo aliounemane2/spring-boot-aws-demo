@@ -7,6 +7,11 @@ variable "region" {
   default = "us-east-1"
 }
 
+variable "aws_profile" {
+  description = "AWS profile"
+  default = "default"
+}
+
 variable "environment" {
   description = "The application environment"
   default = "test"
@@ -21,10 +26,6 @@ variable "public_subnets" {
   description = "List of public subnets"
   default = ["10.0.16.0/20", "10.0.48.0/20"]
 }
-
-/*variable "private_subnets" {
-  description = "List of private subnets"
-}*/
 
 variable "availability_zones" {
   description = "List of availability zones"
@@ -46,12 +47,12 @@ variable "container_port" {
 
 variable "container_cpu" {
   description = "The number of cpu units used by the task"
-  default     = 512
+  default     = 128
 }
 
 variable "container_memory" {
   description = "The amount (in MiB) of memory used by the task"
-  default     = 1024
+  default     = 256
 }
 
 variable "health_check_path" {

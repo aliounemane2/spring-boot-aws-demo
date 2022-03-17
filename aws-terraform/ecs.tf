@@ -1,75 +1,19 @@
 
-resource "aws_iam_role" "ecs_task_execution_role" {
-  name = "${var.name}-ecsTaskExecutionRole"
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ecs-tasks.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
-    }
-  ]
-}
-EOF
-}
-
-resource "aws_iam_role_policy_attachment" "ecs-task-execution-role-policy-attachment" {
-  role       = aws_iam_role.ecs_task_execution_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
-}
-
-resource "aws_iam_role" "ecs_task_role" {
-  name = "${var.name}-ecsTaskRole"
-
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "ecs-tasks.amazonaws.com"
-      },
-      "Effect": "Allow",
-      "Sid": ""
-    }
-  ]
-}
-EOF
-}
-
-resource "aws_iam_role_policy_attachment" "ecs-task-role-s3-policy-attachment" {
-  role       = aws_iam_role.ecs_task_role.name
-  policy_arn = aws_iam_policy.s3_bucket_policy.arn
-}
-
-resource "aws_cloudwatch_log_group" "main" {
-  name = "/ecs/${var.name}-task-${var.environment}"
-
-  tags = {
-    Name        = "${var.name}-task-${var.environment}"
-    Environment = var.environment
-  }
-}
-
 resource "aws_ecs_task_definition" "main" {
   family                   = "${var.name}-task-${var.environment}"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
-  cpu                      = 512
-  memory                   = 1024
+  cpu                      = var.container_cpu
+  memory                   = var.container_memory
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
   task_role_arn            = aws_iam_role.ecs_task_role.arn
   container_definitions = jsonencode([{
     name        = "${var.name}-container-${var.environment}"
     image       = var.container_image
     essential   = true
-
+    environment = [
+      { name = "APP_BUCKET_NAME", value = aws_s3_bucket.main.bucket },
+    ]
     portMappings = [{
       protocol      = "tcp"
       containerPort = var.container_port
@@ -117,4 +61,8 @@ resource "aws_ecs_service" "main" {
 
 output "ecs_cluster_id" {
   value = aws_ecs_cluster.main.id
+}
+
+output "ecs_task_id" {
+  value = aws_ecs_task_definition.main.id
 }

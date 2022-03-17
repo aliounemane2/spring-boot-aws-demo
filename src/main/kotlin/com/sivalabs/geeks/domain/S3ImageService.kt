@@ -9,11 +9,13 @@ import com.amazonaws.services.s3.model.PutObjectRequest
 import com.sivalabs.geeks.config.ApplicationProperties
 import org.apache.commons.io.IOUtils
 import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Component
 import java.io.ByteArrayInputStream
 import java.io.IOException
 import java.io.InputStream
 import java.lang.RuntimeException
 
+@Component
 class S3ImageService(private val properties: ApplicationProperties,
                      private val amazonS3: AmazonS3
                      ) : ImageService {
@@ -26,7 +28,7 @@ class S3ImageService(private val properties: ApplicationProperties,
             val bytes = IOUtils.toByteArray(inputStream)
             metadata.contentLength = bytes.size.toLong()
             val byteArrayInputStream = ByteArrayInputStream(bytes)
-            val key: String = properties.storagePath + "/" + filename
+            val key: String = filename
             val putObjectRequest = PutObjectRequest(properties.bucketName, key, byteArrayInputStream, metadata)
             amazonS3.putObject(putObjectRequest)
         } catch (serviceException: AmazonServiceException) {
@@ -45,7 +47,7 @@ class S3ImageService(private val properties: ApplicationProperties,
     override fun download(filename: String): InputStream? {
         try {
             val s3object = amazonS3.getObject(
-                GetObjectRequest(properties.bucketName, properties.storagePath + "/" + filename)
+                GetObjectRequest(properties.bucketName, filename)
             )
             return s3object.objectContent
         } catch (ioException: IOException) {

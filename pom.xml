@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.sivalabs</groupId>
     <artifactId>spring-boot-geeks</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>spring-boot-geeks</name>
     <description>spring-boot-geeks</description>
     <properties>
@@ -20,6 +20,9 @@
         <spring-cloud-aws-version>2.4.0</spring-cloud-aws-version>
         <testcontainers.version>1.16.2</testcontainers.version>
         <bootstrap.version>5.1.1</bootstrap.version>
+        <jib-maven-plugin.version>3.1.4</jib-maven-plugin.version>
+        <dockerhub.username>sivaprasadreddy</dockerhub.username>
+        <dockerhub.imageName>${dockerhub.username}/${project.artifactId}</dockerhub.imageName>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -175,6 +178,49 @@
                         <version>${kotlin.version}</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>${jib-maven-plugin.version}</version>
+                <configuration>
+                    <from>
+                        <!--<image>gcr.io/distroless/java:11</image>-->
+                        <image>openjdk:17</image>
+                    </from>
+                    <to>
+                        <image>${dockerhub.imageName}</image>
+                        <tags>
+                            <tag>latest</tag>
+                            <tag>${project.version}</tag>
+                        </tags>
+                    </to>
+                    <container>
+                        <ports>
+                            <port>8080</port>
+                        </ports>
+                    </container>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <failOnNoGitDirectory>false</failOnNoGitDirectory>
+                    <failOnUnableToExtractRepoInfo>false</failOnUnableToExtractRepoInfo>
+                    <includeOnlyProperties>
+                        <includeOnlyProperty>^git.commit.id.abbrev$</includeOnlyProperty>
+                        <includeOnlyProperty>^git.commit.id.describe$</includeOnlyProperty>
+                        <includeOnlyProperty>^git.branch$</includeOnlyProperty>
+                    </includeOnlyProperties>
+                </configuration>
             </plugin>
         </plugins>
     </build>
