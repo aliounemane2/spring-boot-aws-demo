@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.sivalabs</groupId>
-    <artifactId>spring-boot-geeks</artifactId>
+    <artifactId>spring-boot-aws-demo</artifactId>
     <version>1.0.0</version>
-    <name>spring-boot-geeks</name>
-    <description>spring-boot-geeks</description>
+    <name>spring-boot-aws-demo</name>
+    <description>spring-boot-aws-demo</description>
     <properties>
         <java.version>17</java.version>
         <kotlin.version>1.6.10</kotlin.version>

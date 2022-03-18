@@ -1,9 +1,9 @@
 version: '3.8'
 services:
 
-  spring-boot-geeks:
+  spring-boot-aws-demo:
     #build: .
-    image: sivaprasadreddy/spring-boot-geeks
+    image: sivaprasadreddy/spring-boot-aws-demo
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_DATASOURCE_DRIVER-CLASS-NAME=org.postgresql.Driver

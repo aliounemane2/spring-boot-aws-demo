@@ -10,7 +10,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     env:
-      DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_USER }}/spring-boot-geeks
+      DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_USER }}/spring-boot-aws-demo
     steps:
       - uses: actions/checkout@v1
 
