@@ -5,9 +5,6 @@ import com.amazonaws.auth.AWSStaticCredentialsProvider
 import com.amazonaws.auth.BasicAWSCredentials
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.AmazonS3ClientBuilder
-import com.sivalabs.geeks.config.ApplicationProperties
-import com.sivalabs.geeks.domain.ImageService
-import com.sivalabs.geeks.domain.S3ImageService
 import org.junit.jupiter.api.Test
 import org.slf4j.LoggerFactory
 import org.springframework.boot.test.context.SpringBootTest

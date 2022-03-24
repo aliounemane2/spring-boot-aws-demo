@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Create New Job Posting</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="pt-5 row ">
+        <div class="offset-md-3 col-md-6">
+        <div th:if="${msg}">
+            <div class="alert alert-success"><span th:text="${msg}">Message</span></div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h3>Create New Job Posting</h3>
+            </div>
+            <div class="card-body">
+                <form id="createForm" method="post" th:method="post"
+                      th:action="${'/jobs'}" th:object="${jobPosting}">
+                    <div class="mb-3">
+                        <label for="company" class="form-label">Company*</label>
+                        <input type="text" id="company" name="company"
+                               class="form-control"
+                               required="required"
+                               th:field="*{company}"
+                               th:value="${jobPosting.company}"
+                               th:classappend="${#fields.hasErrors('company')} ? 'is-invalid' : ''"
+                               placeholder="Enter company"
+                               />
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('company')}" th:errors="*{company}">company Error</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title*</label>
+                        <input type="text" id="title" name="title"
+                               th:field="*{title}"
+                               th:value="${jobPosting.title}"
+                               th:classappend="${#fields.hasErrors('title')} ? 'is-invalid' : ''"
+                               class="form-control" placeholder="Enter title" />
+                        <div class="invalid-feedback"  th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title Error</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description*</label>
+                        <input type="text" id="description" name="description"
+                               th:field="*{description}"
+                               th:value="${jobPosting.description}"
+                               th:classappend="${#fields.hasErrors('description')} ? 'is-invalid' : ''"
+                               class="form-control" placeholder="Enter description" />
+                        <div class="invalid-feedback"  th:if="${#fields.hasErrors('description')}" th:errors="*{description}">description Error</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary pull-right">Save</button>
+
+                </form>
+            </div>
+        </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

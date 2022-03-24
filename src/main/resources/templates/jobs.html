@@ -5,15 +5,16 @@
       layout:decorate="~{layout}"
 >
 <head>
-    <title>Profiles</title>
+    <title>Jobs</title>
 </head>
 <body>
 <div layout:fragment="content">
     <div class="pt-5">
-        <div class="alert alert-primary" role="alert" th:each="profile: ${profiles}">
+        <div class="alert alert-primary" role="alert" th:each="job: ${jobs}">
             <h3 class="alert-heading">
-                <a href="#" th:href="${'/profiles/'+ profile.id}" th:text="${profile.name}" style="text-decoration: none">Profile Name</a>
+                <span th:text="${job.company +' : '+ job.title}" style="text-decoration: none">Company : Job Title</span>
             </h3>
+            <p th:text="${job.description}">Job Description</p>
         </div>
     </div>
 </div>

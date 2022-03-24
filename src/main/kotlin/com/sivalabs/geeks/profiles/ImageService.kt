@@ -1,4 +1,4 @@
-package com.sivalabs.geeks.domain;
+package com.sivalabs.geeks.profiles;
 
 import java.io.InputStream
 
