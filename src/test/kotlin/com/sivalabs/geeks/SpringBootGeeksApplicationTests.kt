@@ -28,7 +28,7 @@ class SpringBootGeeksApplicationTests {
         companion object {
             private val credentialsProvider: AWSCredentialsProvider = getCredentialsProvider()
             private val localStackContainer: LocalStackContainer = LocalStackContainer(
-                DockerImageName.parse("localstack/localstack:0.11.2"))
+                DockerImageName.parse("localstack/localstack:1.0.1"))
                 .withServices(S3, SQS)
                 .withExposedPorts(4566)
             init {
